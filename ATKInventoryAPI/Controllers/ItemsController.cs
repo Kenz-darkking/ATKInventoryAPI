@@ -125,16 +125,15 @@ public class ItemsController : ControllerBase
         }
         catch (SqlException ex)
         {
-
-            if (ex.Number == 2627 || ex.Number == 2601)
+            if (ex.Message.Contains("UNIQUE KEY") || ex.Message.Contains("duplicate key"))
             {
                 return Conflict(new
                 {
-                    message = "Gagal menyimpan: Kode item (Itemcode) Duplicate/sudah terdaftar di database. Gunakan kode yang berbeda."
+                    message = "Kode item sudah terdaftar. Silakan gunakan kode lain."
                 });
             }
 
-            return StatusCode(500, new { message = "Terjadi kesalahan pada database.", error = ex.Message });
+            return StatusCode(500, new { message = "Terjadi kesalahan pada database." });
         }
     }
 
@@ -190,15 +189,15 @@ public class ItemsController : ControllerBase
         }
         catch (SqlException ex)
         {
-            if ((ex.Number == 2627 || ex.Number == 2601))
+            if (ex.Message.Contains("UNIQUE KEY") || ex.Message.Contains("duplicate key"))
             {
                 return Conflict(new
                 {
-                    message = "Gagal memperbarui: Kode item (Itemcode) Duplicate/sudah digunakan oleh item lain."
+                    message = "Kode item sudah terdaftar. Silakan gunakan kode lain."
                 });
             }
 
-            return StatusCode(500, new { message = "Terjadi kesalahan pada database.", error = ex.Message });
+            return StatusCode(500, new { message = "Terjadi kesalahan pada database." });
         }
     }
 
