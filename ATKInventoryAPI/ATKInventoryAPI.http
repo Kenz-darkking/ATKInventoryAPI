@@ -1,0 +1,6 @@
+@ATKInventoryAPI_HostAddress = http://localhost:5244
+
+GET {{ATKInventoryAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
